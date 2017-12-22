@@ -44,6 +44,8 @@ public class LikeButton extends FrameLayout implements View.OnClickListener {
 
     private float animationScaleFactor;
 
+    private Speed speed = Speed.NORMAL;
+
     private boolean isChecked;
 
 
@@ -184,27 +186,27 @@ public class LikeButton extends FrameLayout implements View.OnClickListener {
             animatorSet = new AnimatorSet();
 
             ObjectAnimator outerCircleAnimator = ObjectAnimator.ofFloat(circleView, CircleView.OUTER_CIRCLE_RADIUS_PROGRESS, 0.1f, 1f);
-            outerCircleAnimator.setDuration(250);
+            outerCircleAnimator.setDuration(speed == Speed.NORMAL ? 250 : 125);
             outerCircleAnimator.setInterpolator(DECCELERATE_INTERPOLATOR);
 
             ObjectAnimator innerCircleAnimator = ObjectAnimator.ofFloat(circleView, CircleView.INNER_CIRCLE_RADIUS_PROGRESS, 0.1f, 1f);
-            innerCircleAnimator.setDuration(200);
-            innerCircleAnimator.setStartDelay(200);
+            innerCircleAnimator.setDuration(speed == Speed.NORMAL ? 200 : 100);
+            innerCircleAnimator.setStartDelay(speed == Speed.NORMAL ? 200 : 100);
             innerCircleAnimator.setInterpolator(DECCELERATE_INTERPOLATOR);
 
             ObjectAnimator starScaleYAnimator = ObjectAnimator.ofFloat(icon, ImageView.SCALE_Y, 0.2f, 1f);
-            starScaleYAnimator.setDuration(350);
-            starScaleYAnimator.setStartDelay(250);
+            starScaleYAnimator.setDuration(speed == Speed.NORMAL ? 350 : 175);
+            starScaleYAnimator.setStartDelay(speed == Speed.NORMAL ? 250 : 125);
             starScaleYAnimator.setInterpolator(OVERSHOOT_INTERPOLATOR);
 
             ObjectAnimator starScaleXAnimator = ObjectAnimator.ofFloat(icon, ImageView.SCALE_X, 0.2f, 1f);
-            starScaleXAnimator.setDuration(350);
-            starScaleXAnimator.setStartDelay(250);
+            starScaleXAnimator.setDuration(speed == Speed.NORMAL ? 350 : 175);
+            starScaleXAnimator.setStartDelay(speed == Speed.NORMAL ? 250 : 125);
             starScaleXAnimator.setInterpolator(OVERSHOOT_INTERPOLATOR);
 
             ObjectAnimator dotsAnimator = ObjectAnimator.ofFloat(dotsView, DotsView.DOTS_PROGRESS, 0, 1f);
-            dotsAnimator.setDuration(900);
-            dotsAnimator.setStartDelay(50);
+            dotsAnimator.setDuration(speed == Speed.NORMAL ? 900 : 450);
+            dotsAnimator.setStartDelay(speed == Speed.NORMAL ? 50 : 25);
             dotsAnimator.setInterpolator(ACCELERATE_DECELERATE_INTERPOLATOR);
 
             animatorSet.playTogether(
@@ -536,6 +538,15 @@ public class LikeButton extends FrameLayout implements View.OnClickListener {
         this.animationScaleFactor = animationScaleFactor;
 
         setEffectsViewSize();
+    }
+
+    public void setDuaration(Speed speed) {
+        this.speed = speed;
+    }
+
+    enum Speed {
+        NORMAL,
+        FAST
     }
 
 }
